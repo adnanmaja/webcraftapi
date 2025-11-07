@@ -20,4 +20,4 @@ class KantinResponse(BaseModel):
     name: str
     description: str
     location: str
-    owner_id: int
+    owner_id: Optional[int] = None

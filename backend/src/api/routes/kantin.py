@@ -54,7 +54,8 @@ def create_kantin(kantin: KantinCreate, db: Session = Depends(get_db)):
     new_kantin = Kantin(
         name=kantin.name,
         location=kantin.location,
-        description=kantin.description
+        description=kantin.description,
+        owner_id=kantin.owner_id
     )
     
     db.add(new_kantin)
@@ -80,6 +81,7 @@ def update_kantin(
     kantin.name = kantin_update.name
     kantin.location = kantin_update.location
     kantin.description = kantin_update.description
+    kantin.owner_id = kantin_update.owner_id
     
     db.commit()
     db.refresh(kantin)

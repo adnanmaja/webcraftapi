@@ -1,6 +1,9 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, Numeric, Text, TIMESTAMP, CheckConstraint
 from sqlalchemy.orm import relationship
-from ..database.db import base, engine
+from ..database.db import engine, base
+
+
+
 
 # ==== Schema DB nyaaa (cek db_schema.md) ====
 
@@ -16,7 +19,7 @@ class User(base):
     role = Column(String, nullable=False, default="customer")
     phone_number = Column(String)
 
-    kantins = relationship("Kantin", back_populates="owner")
+    warungs = relationship("Warung", back_populates="owner")
     orders = relationship("Order", back_populates="user")
 
 # list semua kantin di ugm 

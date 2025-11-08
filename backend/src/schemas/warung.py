@@ -3,13 +3,13 @@ from typing import Optional
 
 class WarungCreate(BaseModel):
     name: str
-    kantin_id: str
+    kantin_id: int
     owner_id: int
     image_url: str
 
 class WarungUpdate(BaseModel):
     name: Optional[str] = None
-    kantin_id: Optional[str] = None
+    kantin_id: Optional[int] = None
     owner_id: Optional[int] = None
     image_url: Optional[str] = None
 
@@ -18,6 +18,6 @@ class WarungResponse(BaseModel):
     
     id: int
     name: str
-    kantin_id: Optional[str] = None
+    kantin_id: Optional[int] = None
     owner_id: Optional[int] = None
     image_url: Optional[str] = None

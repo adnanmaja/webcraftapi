@@ -27,10 +27,10 @@ def get_menuitem(menuitem_id: int, db: Session = Depends(get_db)):
     
     return menuitem
 
-# Cari item menu berdasarkan kantin (menyalahi penamaan rest, tapi yauda biarin lah yg penting fungsi)
-@router.get("/menuitem/kantin/{kantin_id}", response_model=MenuItemResponse)
-def get_menuitem_by_kantin(kantin_id: int, db: Session = Depends(get_db)):
-    menuitem = db.query(MenuItem).filter(Kantin.id == kantin_id).first()
+# Cari item menu berdasarkan warung
+@router.get("/warung/{warung_id}/menu", response_model=MenuItemResponse)
+def get_menuitem_by_kantin(warung_id: int, db: Session = Depends(get_db)):
+    menuitem = db.query(MenuItem).filter(Kantin.id == warung_id).first()
     
     if not menuitem:
         raise HTTPException(status_code=404, detail="MenuItem nggak ada")
@@ -63,7 +63,7 @@ def create_menuitem(menuitem: MenuItemCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Item menu sudah ada!")
     
     new_menuitem = MenuItem(
-        kantin_id=menuitem.kantin_id,
+        warung_id=menuitem.warung_id,
         name=menuitem.name,
         price=menuitem.price,
         image=menuitem.image_url,

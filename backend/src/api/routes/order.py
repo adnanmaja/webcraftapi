@@ -34,10 +34,10 @@ def get_orders_by_user(user_id: int, db: Session = Depends(get_db)):
     orders = db.query(Order).filter(Order.user_id == user_id).all()
     return orders
 
-# Cari order berdasarkan kantin id
-@router.get("/kantin/{kantin_id}/orders", response_model=List[OrderResponse])
-def get_orders_by_kantin(kantin_id: int, db: Session = Depends(get_db)):
-    orders = db.query(Order).filter(Order.kantin_id == kantin_id).all()
+# Cari order berdasarkan warung id
+@router.get("/warung/{warung_id}/orders", response_model=List[OrderResponse])
+def get_orders_by_warung(warung_id: int, db: Session = Depends(get_db)):
+    orders = db.query(Order).filter(Order.warung_id == warung_id).all()
     return orders
 
 # Cari order berdasarkan payment status
@@ -55,7 +55,7 @@ def create_order(order: OrderCreate, db: Session = Depends(get_db)):
     
     new_order = Order(
         user_id=order.user_id,
-        kantin_id=order.kantin_id,
+        warung_id=order.warung_id,
         total_price=order.total_price,
         payment_status=order.payment_status,
         created_at=order.created_at
@@ -68,7 +68,7 @@ def create_order(order: OrderCreate, db: Session = Depends(get_db)):
     return new_order
 
 
-# === PUT (credits: jundan )===
+# === PUT (credits: depsek )===
 # Update order
 @router.put("/orders/{order_id}", response_model=OrderResponse)
 def update_order(
@@ -84,8 +84,8 @@ def update_order(
     # Update only provided fields
     if order_update.user_id is not None:
         order.user_id = order_update.user_id
-    if order_update.kantin_id is not None:
-        order.kantin_id = order_update.kantin_id
+    if order_update.warung_id is not None:
+        order.warung_id = order_update.warung_id
     if order_update.total_price is not None:
         order.total_price = order_update.total_price
     if order_update.payment_status is not None:

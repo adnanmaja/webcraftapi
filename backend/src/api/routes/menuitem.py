@@ -58,15 +58,15 @@ def get_menuitem_by_query(name: str = None, price: Decimal = None, db: Session =
 @router.post("/menuitem", response_model=MenuItemResponse)
 def create_menuitem(menuitem: MenuItemCreate, db: Session = Depends(get_db)):
 
-    existing_menuitem = db.query(MenuItem).filter(MenuItem.id == menuitem.id).first()
-    if existing_menuitem:
-        raise HTTPException(status_code=400, detail="Item menu sudah ada!")
+    # existing_menuitem = db.query(MenuItem).filter(MenuItem.id == menuitem.id).first()
+    # if existing_menuitem:
+    #     raise HTTPException(status_code=400, detail="Item menu sudah ada!")
     
     new_menuitem = MenuItem(
         warung_id=menuitem.warung_id,
         name=menuitem.name,
         price=menuitem.price,
-        image=menuitem.image_url,
+        image_url=menuitem.image_url,
         stock=menuitem.stock
     )
     

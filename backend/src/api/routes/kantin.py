@@ -1,7 +1,6 @@
 from fastapi import Depends, HTTPException, APIRouter
 from sqlalchemy.orm import Session
 from ...schemas.kantin import KantinCreate, KantinResponse, KantinUpdate
-from ...schemas.relationships.kantin_menuitem import KantinWithMenuResponse
 from ...database.db import get_db
 from ...models.model import Kantin
 
@@ -11,13 +10,13 @@ router = APIRouter()
 
 # === GET ===
 # tampilin smeua kantin di ugm
-@router.get("/kantin", response_model=list[KantinWithMenuResponse])
+@router.get("/kantin", response_model=list[KantinResponse])
 def get_all_kantin(db: Session = Depends(get_db)):
     kantin = db.query(Kantin).all()
     return kantin
 
 # Cari kantin berdasarkan id (GET)
-@router.get("/kantin/{kantin_id}", response_model=KantinWithMenuResponse)
+@router.get("/kantin/{kantin_id}", response_model=KantinResponse)
 def get_kantin(kantin_id: int, db: Session = Depends(get_db)):
     kantin = db.query(Kantin).filter(Kantin.id == kantin_id).first()
     
@@ -55,7 +54,7 @@ def create_kantin(kantin: KantinCreate, db: Session = Depends(get_db)):
         name=kantin.name,
         location=kantin.location,
         description=kantin.description,
-        owner_id=kantin.owner_id
+        image_url=kantin.image_url
     )
     
     db.add(new_kantin)
@@ -81,7 +80,7 @@ def update_kantin(
     kantin.name = kantin_update.name
     kantin.location = kantin_update.location
     kantin.description = kantin_update.description
-    kantin.owner_id = kantin_update.owner_id
+    kantin.image_url = kantin_update.image_url
     
     db.commit()
     db.refresh(kantin)

@@ -27,24 +27,36 @@ class Kantin(base):
     name = Column(String, nullable=False)
     description = Column(String, nullable=False)
     location = Column(String, nullable=False)
-    owner_id = Column(Integer, ForeignKey("users.id"))
+    image_url = Column(String)  
 
-    owner = relationship("User", back_populates="kantins") 
-    menu_items = relationship("MenuItem", back_populates="kantin") 
-    orders = relationship("Order", back_populates="kantin") 
+    warungs = relationship("Warung", back_populates="kantin")
+
+class Warung(base):
+    __tablename__ ="warung"
+
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    owner_id = Column(Integer, ForeignKey("users.id"))
+    kantin_id = Column(Integer, ForeignKey("kantin.id"))  
+    image_url = Column(String)  
+
+    kantin = relationship("Kantin", back_populates="warungs")  
+    owner = relationship("User", back_populates="warungs") 
+    menu_items = relationship("MenuItem", back_populates="warung")  
+    orders = relationship("Order", back_populates="warung")  
 
 # menu di setiap kantin
 class MenuItem(base):
     __tablename__ = "menu_items"
 
     id = Column(Integer, primary_key=True, index=True)
-    kantin_id = Column(Integer, ForeignKey("kantin.id"))
+    warung_id = Column(Integer, ForeignKey("warung.id")) 
     name = Column(String, nullable=False)
     price = Column(Numeric(10,2), nullable=False)
     image_url = Column(String)
     stock = Column(Integer, default=0)
  
-    kantin = relationship("Kantin", back_populates="menu_items")
+    warung = relationship("Warung", back_populates="menu_items")
     order_items = relationship("OrderItem", back_populates="menu_item")
 
 # Jumlah orderan (kayak keranjang gitu)
@@ -53,13 +65,13 @@ class Order(base):
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
-    kantin_id = Column(Integer, ForeignKey("kantin.id"))
+    warung_id = Column(Integer, ForeignKey("warung.id"))  
     total_price = Column(Numeric(10,2), nullable=False)
     payment_status = Column(String, default="pending")
     created_at = Column(TIMESTAMP)
 
     user = relationship("User", back_populates="orders")  
-    kantin = relationship("Kantin", back_populates="orders")
+    warung = relationship("Warung", back_populates="orders")  
     order_items = relationship("OrderItem", back_populates="order")
 
 # Item yang di order (Item di keranjang)

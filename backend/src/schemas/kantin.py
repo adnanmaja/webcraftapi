@@ -5,13 +5,13 @@ class KantinCreate(BaseModel):
     name: str
     description: str
     location: str
-    owner_id: int
+    image_url: str
 
 class KantinUpdate(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     location: Optional[str] = None
-    owner_id: Optional[int] = None
+    image_url: Optional[str] = None
 
 class KantinResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
@@ -20,4 +20,4 @@ class KantinResponse(BaseModel):
     name: str
     description: str
     location: str
-    owner_id: Optional[int] = None
+    image_url: str

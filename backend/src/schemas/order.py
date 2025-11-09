@@ -4,7 +4,7 @@ from decimal import Decimal
 from typing import Optional, List
 
 class OrderItemCreate(BaseModel):
-    order_id: int
+    order_id: Optional[int] = None
     menu_item_id: int
     quantity: int
     price_at_purchase: Decimal

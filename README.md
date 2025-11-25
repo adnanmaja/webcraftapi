@@ -1,1 +1,2 @@
-repo backend utk webcraft, dipidah biar enak
+- repo backend utk webcraft, dipidah biar enak
+- strukturnya masih berantakan, ntar ku benerin dah

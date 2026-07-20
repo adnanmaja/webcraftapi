@@ -120,3 +120,5 @@ async def register(user: UserCreate, db: Session = Depends(get_db)):
     
     return db_user
 
+
+
